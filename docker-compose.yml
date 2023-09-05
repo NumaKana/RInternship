@@ -9,4 +9,16 @@ services:
       - "3000:3000"
     volumes:
       - ./frontend:/app
+    tty: true
     command: yarn start
+  django:
+    build:
+      context: "./backend/"
+      dockerfile: "../docker/backend/Dockerfile"
+    container_name: "django"
+    working_dir: "/root/"
+    tty: true
+    volumes:
+      - ./backend/app:/root/app
+    ports:
+      - "8000:8000"
