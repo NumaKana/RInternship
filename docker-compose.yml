@@ -10,7 +10,7 @@ services:
     volumes:
       - ./frontend:/app
     tty: true
-    command: yarn start
+    command: npm start
   django:
     build:
       context: "./backend/"
