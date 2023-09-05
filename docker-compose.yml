@@ -1,0 +1,12 @@
+version: "3"
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: ../docker/frontend/Dockerfile
+    container_name: node18
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+    command: yarn start
