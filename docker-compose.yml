@@ -1,0 +1,14 @@
+version: "3"
+services:
+  django:
+    build: 
+      context: "./backend/"
+      dockerfile: "../docker/backend/Dockerfile"
+    container_name: "django"
+    working_dir: "/root/"
+    tty: true
+    volumes:
+      - ./backend/app:/root/app
+    ports:
+      - "8000:8000"
+      #- 80:80
