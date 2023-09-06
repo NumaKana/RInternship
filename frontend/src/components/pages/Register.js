@@ -12,14 +12,14 @@ import { FormControl } from '@mui/base/FormControl';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import dayjs from 'dayjs';
-import "../../App.css"
+import { CustomButton } from "../atoms/CustomButton";
+
 
 function Register(props) {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("野菜");
   const [state, setState] = useState("常温");
-  const [date, setDate] = useState(dayjs().add(14, 'day'));
-  const [addDays, setAddDays] = useState(14);
+  const [date, setDate] = useState();
 
   const CATEGORIES = ["野菜", "肉", "魚", "牛乳", "卵", "果物"];
 
@@ -53,50 +53,69 @@ function Register(props) {
         days += 14;
         break;
     }
-    setDate(date.add(days - addDays, "day"));
-    setAddDays(days);
+    setDate(dayjs().add(days, "day"));
+  }
+
+  const submit = () => {
+
   }
 
   return (
     <div>
       <p>食品登録</p>
 
-      <p>食品名</p>
-      <TextField id="filled-basic" label="食品名" variant="standard" onChange={(e) => { setName(e.target.value) }} required />
+      <div style={{ padding: "10px" }}>
+        <p style={{ color: "#563F32", padding: "0px 24px", fontWeight: "bold" }}>食品名</p>
+        <TextField id="filled-basic" label="食品名" variant="standard" onChange={(e) => { setName(e.target.value) }} />
+      </div>
 
-      <p>カテゴリー</p>
-      <Select defaultValue="野菜" onChange={(e) => { setCategory(e.target.innerText); changeDate(e.target.innerText, state); }}>
-        <Option value="野菜">野菜</Option>
-        <Option value="肉">肉</Option>
-        <Option value="魚">魚</Option>
-        <Option value="牛乳">牛乳</Option>
-        <Option value="卵">卵</Option>
-        <Option value="果物">果物</Option>
-      </Select>
+      <div style={{ padding: "10px" }}>
+        <p style={{ color: "#563F32", padding: "0px 24px", fontWeight: "bold" }}>カテゴリー</p>
+        <div style={{ color: "#563F32", width: "100px", margin: "auto" }}>
+          <Select defaultValue="野菜" onChange={(e) => { setCategory(e.target.innerText); changeDate(e.target.innerText, state); }}>
+            <Option value="野菜" color="#563F32">野菜</Option>
+            <Option value="肉">肉</Option>
+            <Option value="魚">魚</Option>
+            <Option value="牛乳">牛乳</Option>
+            <Option value="卵">卵</Option>
+            <Option value="果物">果物</Option>
+          </Select>
+        </div>
+      </div>
 
-      <p>保存場所</p>
-      <FormControl>
-        <RadioGroup defaultValue="常温" onChange={(e) => { setState(e.target.value); changeDate(category, e.target.value); }}>
-          <Radio value="常温" label="常温" variant="常温" />
-          <Radio value="冷蔵" label="冷蔵" variant="冷蔵" />
-          <Radio value="冷凍" label="冷凍" variant="冷凍" />
-        </RadioGroup>
-      </FormControl>
+      <div style={{ padding: "10px" }}>
+        <p style={{ color: "#563F32", padding: "0px 24px", fontWeight: "bold" }}>保存場所</p>
+        <div style={{ color: "#563F32", width: "250px", margin: "auto" }}>
+          <FormControl>
+            <RadioGroup orientation="horizontal" defaultValue="常温" onChange={(e) => { setState(e.target.value); changeDate(category, e.target.value); }}>
+              <Radio value="常温" label="常温" variant="soft" color="warning" />
+              <Radio value="冷蔵" label="冷蔵" variant="soft" color="warning" />
+              <Radio value="冷凍" label="冷凍" variant="soft" color="warning" />
+            </RadioGroup>
+          </FormControl>
+        </div>
+      </div>
 
-      <p>消費/賞味期限</p>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DemoContainer components={["MobileDatePicker"]}>
-          <MobileDatePicker
-            value={date}
-            disablePast={true}
-            onChange={(value) => { setDate(value) }} />
-        </DemoContainer>
-      </LocalizationProvider>
-      {/* <p>{name}</p>
-      <p>{category}</p>
-      <p>{state}</p>
-      <p>{date.format()}</p> */}
-      <Button variant="contained">追加</Button>
+
+
+      <div style={{ padding: "10px" }}>
+        <p style={{ color: "#563F32", padding: "0px 24px", fontWeight: "bold" }}>消費/賞味期限</p>
+        <div style={{ color: "#563F32", width: "200px", margin: "auto", fontWeight: "bold" }}>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DemoContainer components={["MobileDatePicker"]}>
+              <MobileDatePicker
+                value={date}
+                disablePast={true}
+                onChange={(value) => { setDate(value) }}
+              />
+            </DemoContainer>
+          </LocalizationProvider>
+        </div>
+      </div>
+
+      <div style={{ padding: "10px" }}>
+        <CustomButton onClick={submit}>追加</CustomButton>
+      </div>
     </div>
   );
 }
