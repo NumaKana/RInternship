@@ -9,4 +9,4 @@ class Foods(models.Model):
     expiration_date = models.DateField()
     storage_status = models.CharField(max_length=100)
     last_update_datetime = models.DateTimeField(auto_now=True)
-    regisration_datetime = models.DateTimeField(auto_now_add=True)
+    registration_datetime = models.DateTimeField(auto_now_add=True)
