@@ -1,10 +1,10 @@
-import Radio from "@mui/joy/Radio";
+import { FoodItem } from "../molecules/FoodItem";
 
 const Foods = () => {
   return (
     <div>
       FoodsPage
-      <Radio />
+      <FoodItem />
     </div>
   );
 };
