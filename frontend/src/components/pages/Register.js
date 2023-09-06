@@ -3,7 +3,6 @@ import * as React from 'react';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
 import Select from '@mui/joy/Select';
 import Option from '@mui/joy/Option';
@@ -13,6 +12,7 @@ import { FormControl } from '@mui/base/FormControl';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import dayjs from 'dayjs';
+import "../../App.css"
 
 function Register(props) {
   const [name, setName] = useState("");
@@ -92,10 +92,10 @@ function Register(props) {
             onChange={(value) => { setDate(value) }} />
         </DemoContainer>
       </LocalizationProvider>
-      <p>{name}</p>
+      {/* <p>{name}</p>
       <p>{category}</p>
       <p>{state}</p>
-      <p>{date.format()}</p>
+      <p>{date.format()}</p> */}
       <Button variant="contained">追加</Button>
     </div>
   );
