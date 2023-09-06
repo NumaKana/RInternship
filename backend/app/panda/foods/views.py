@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseBadRequest, HttpResponseNotAllowed
 import json
 from .models import Foods
+from panda_house.models import PandaStatus
+import random
 
 
 def foods_handler(request):
@@ -13,7 +15,9 @@ def foods_handler(request):
         return HttpResponseNotAllowed(['GET', 'POST'])
 
 def food_detail_handler(request, id):
-    if request.method == 'PUT':
+    if request.method == 'POST':
+        return consume_food(request, id)
+    elif request.method == 'PUT':
         return edit_food(request, id)
     elif request.method == 'DELETE':
         return delete_food(request, id)
@@ -64,8 +68,27 @@ def register_foods(request):
     return JsonResponse({"status": "success", "message": "Food registered successfully"})
     
 
-# def consume_food(request, id):
-#     return JsonResponse({"message": f"Consume food with ID {id}"})
+def consume_food(request, id):
+    if request.method != 'POST':
+        return HttpResponseBadRequest("Invalid request method")
+    
+    try:
+        food = Foods.objects.get(pk=id)
+        food.delete()
+
+        panda_status = PandaStatus.objects.get(pk=1)
+
+        rand_value = random.random()
+        if rand_value < 0.7:
+            panda_status.owned_normal_bamboo_count += 1
+        else:
+            panda_status.owned_premium_bamboo_count += 1
+
+        panda_status.save()
+        
+        return JsonResponse({"status": "success", "message": "Food consumed and bamboo added"})
+    except Foods.DoesNotExist:
+        return JsonResponse({"status": "error", "message": "Food with given id does not exist"}, status=404)
 
 def edit_food(request, id):
     if request.method != 'PUT':
