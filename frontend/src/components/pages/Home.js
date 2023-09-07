@@ -23,19 +23,19 @@ function NextArrow(props) {
   const { className, style, onClick } = props;
   return (
     <div
-      className={className}
-      style={{ ...style, display: "block", backgroundImage:`url(${next_arrow})`, width:"48px", height: "48px", right: "20px"}}
+      className="absolute slick-slider top-0 right-10 slick-initialized"
+      style={{ ...style, display: "block", backgroundImage:`url(${next_arrow})`, width:"48px", height: "48px"}}
       onClick={onClick}
     />
   );
 }
 
 function PrevArrow(props) {
-  const { className, style, onClick } = props;
+  const { onClick } = props;
   return (
     <div
-      className={className}
-      style={{ ...style, display: "block", backgroundImage:`url(${prev_arrow})`, width:"48px", height: "48px", left:"20px"}}
+      className="absolute slick-slider left-10 slick-initialized"
+      style={{ display: "block", backgroundImage:`url(${prev_arrow})`, width:"48px", height: "48px"}}
       onClick={onClick}
     />
   );
