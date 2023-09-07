@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'foods.apps.FoodsConfig',
+    'line_notification.apps.LineNotificationConfig',
     'panda_house.apps.PandaHouseConfig',
     'django.contrib.admin',
     'django.contrib.auth',
