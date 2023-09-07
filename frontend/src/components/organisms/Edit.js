@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import * as React from 'react';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -13,54 +13,55 @@ import TextField from '@mui/material/TextField';
 import dayjs from 'dayjs';
 import { CustomButton } from "../atoms/CustomButton";
 import { SwipeableDrawer } from '@mui/material';
-import { useNavigate } from "react-router-dom";
-import { ROUTES } from "../../routes/routes";
 import FoodApi from "../../api/FoodApi"
 
 function Edit(props) {
-  const [id, setID] = useState();
   const [name, setName] = useState();
-  const [category, setCategory] = useState();
-  const [state, setState] = useState();
+  const [category, setCategory] = useState("vegetable");
+  const [state, setState] = useState("room");
   const [date, setDate] = useState();
-  const [open, setOpen] = useState();
+  const [open, setOpen] = useState(false);
   const [error, setError] = useState(false);
 
   const foodApi = new FoodApi();
-  const navigate = useNavigate();
 
-  React.useEffect(() => {
-    setOpen(props.open);
-    // console.log(props.food);
-    if (props.open && (props.food !== null)) {
-      const food = props.food;
-      setID(food.id);
-      setName(food.food_name);
-      setCategory(food.category);
-      setState(food.storage_status);
-      setDate(dayjs(food.expiration_date));
-    }
-  }, [props.open, props.food]);
+
+
+  useEffect(
+    () => {
+      const setProp = () => {
+        setName(props.food.food_name);
+        setCategory(props.food.category);
+        setState(props.food.storage_status);
+        setDate(dayjs(props.food.expiration_date));
+      }
+
+      setOpen(props.open);
+      if (props.open) {
+        setProp();
+      }
+    },
+    [props.open]
+  );
 
   const submit = () => {
     if (name === "") {
       setError(true);
       return;
     }
-    var d = date.format("YYYY-MM-DD");
-    var data = { "food_edit": { "food_id": id, "food_name": name, "category": category, "expiration_date": d, "storage_status": state } };
+    const d = date.format("YYYY-MM-DD");
+    const data = { "food_edit": { "food_id": props.food.food_id, "food_name": name, "category": category, "expiration_date": d, "storage_status": state } };
     foodApi
-      .editFood(id, data)
+      .editFood(props.food.food_id, data)
       .then((res) => {
         console.log(res);
+        props.onEdit();
+        props.openEdit(false);
       })
       .catch((err) => {
         console.log(err);
         alert("failed to edit");
       });
-    console.log(data);
-    setOpen(false);
-    navigate(ROUTES.FOODS);
   }
 
   const toggleDrawer = (newOpen) => () => {
@@ -84,7 +85,7 @@ function Edit(props) {
           </div>
           <div style={{ padding: "10px" }}>
             <p style={{ color: "#563F32", padding: "0px 24px", fontWeight: "bold" }}>食品名</p>
-            <TextField required defaultValue={name} value={name} id="filled-basic" variant="standard"
+            <TextField required value={name} id="filled-basic" variant="standard"
               onChange={(e) => {
                 setName(e.target.value);
                 if (e.target.value === "") {
@@ -103,8 +104,9 @@ function Edit(props) {
               <FormControl sx={{ minWidth: "100px" }} variant="standard">
                 <Select labelId="demo-simple-select-standard-label"
                   id="demo-simple-select-standard"
-                  defaultValue="vegetable"
-                  onChange={(e) => { console.log(e); setCategory(e.target.value); changeDate(e.target.value, state); }}
+                  // defaultValue={category}
+                  value={category}
+                  onChange={(e) => { setCategory(e.target.value); }}
                 >
                   <MenuItem value="vegetable">野菜</MenuItem>
                   <MenuItem value="meat">肉</MenuItem>
@@ -121,7 +123,11 @@ function Edit(props) {
             <p style={{ color: "#563F32", padding: "0px 24px", fontWeight: "bold" }}>保存場所</p>
             <div style={{ color: "#563F32", width: "250px", margin: "auto" }}>
               <FormControl>
-                <RadioGroup orientation="horizontal" defaultValue={state} onChange={(e) => { setState(e.target.value); changeDate(category, e.target.value); }}>
+                <RadioGroup orientation="horizontal"
+                  // defaultValue={state}
+                  value={state}
+                  onChange={(e) => { setState(e.target.value); }}
+                >
                   <Radio value="room" label="常温" variant="soft" color="warning" />
                   <Radio value="fridge" label="冷蔵" variant="soft" color="warning" />
                   <Radio value="freezer" label="冷凍" variant="soft" color="warning" />
@@ -145,7 +151,7 @@ function Edit(props) {
           </div>
 
           <div style={{ padding: "10px" }}>
-            <CustomButton onClick={submit}>追加</CustomButton>
+            <CustomButton onClick={submit}>変更</CustomButton>
           </div>
         </div>
       </SwipeableDrawer>

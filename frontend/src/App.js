@@ -9,13 +9,11 @@ import Register from "./components/pages/Register";
 import "./components/pages/Register";
 import Edit from "./components/organisms/Edit";
 import dayjs from "dayjs";
-import Popup from "./components/organisms/Popup";
-import img from "./img/panda_good.gif";
 
 function App() {
   return (
     <div className="App">
-      {/* <Routes>
+      <Routes>
         <Route path="/" element={<Navigate replace to="/home" />} />
         <Route path="/home" element={<Home />} />
         <Route
@@ -36,8 +34,7 @@ function App() {
             </>
           }
         />
-      </Routes> */}
-      <Popup message="congrats" img={img} notOpen={false} message1={"HELLO"} message2={"Have a good day!!!"}/>
+      </Routes>
       <NavBar />
     </div>
   );

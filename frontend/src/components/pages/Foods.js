@@ -57,7 +57,7 @@ const Foods = () => {
             );
           })}
       </div>
-      <Edit open={edit} openEdit={openEdit} food={foodInfo}></Edit>
+      <Edit open={edit} onEdit={fetchFoods} openEdit={openEdit} food={foodInfo}></Edit>
     </div>
   );
 };
