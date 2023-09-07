@@ -36,3 +36,28 @@
     transform: rotate(360deg);
   }
 }
+
+.bg-main {
+  background-color: #563f32;
+}
+
+.bg-base {
+  background-color: #e8daa9;
+}
+
+.text-main {
+  color: #563f32;
+}
+
+.text-base {
+  color: #e8daa9;
+}
+
+.text-default {
+  color: #333333;
+}
+
+body {
+  background-color: #fcfbf9;
+  color: #333333;
+}
