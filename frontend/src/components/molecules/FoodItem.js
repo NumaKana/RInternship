@@ -7,19 +7,46 @@ import { CustomIconButton } from "../atoms/CustomIconButton";
 import { CustomButton } from "../atoms/CustomButton";
 
 import { CATEGORIES, STORAGES } from "../../constants/food";
-import { exampleFood } from "../../examples/food";
+import FoodApi from "../../api/FoodApi";
 
 export const FoodItem = (props) => {
-  const { food = exampleFood } = props;
+  const { food, onDelete, onConsume } = props;
   const [open, setOpen] = useState(false);
 
   const handleItemClick = () => {
     setOpen(!open);
   };
 
+  const handleDeleteButtonClick = () => {
+    const foodApi = new FoodApi();
+    foodApi
+      .deleteFood(food.food_id)
+      .then((res) => {
+        console.log(res);
+        onDelete();
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("削除に失敗しました");
+      });
+  };
+  const handleConsumeButtonClick = () => {
+    const foodApi = new FoodApi();
+    foodApi
+      .consumeFood(food.food_id)
+      .then((res) => {
+        console.log(res);
+        onConsume();
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("処理に失敗しました");
+      });
+  };
+
   const daysLeft =
     Math.floor(
-      (food.expirationDate.getTime() - new Date().getTime()) /
+      (new Date(food.expiration_date).getTime() - new Date().getTime()) /
         (1000 * 60 * 60 * 24)
     ) + 1;
 
@@ -30,7 +57,7 @@ export const FoodItem = (props) => {
       onClick={handleItemClick}
     >
       <div className="flex justify-between items-center">
-        <p>{food.name}</p>
+        <p>{food.food_name}</p>
         <p>
           あと
           <span className="font-bold" style={{ color: "#aa0000" }}>
@@ -43,7 +70,7 @@ export const FoodItem = (props) => {
           <tbody>
             <DetailTableRow
               label="消費 / 賞味期限"
-              value={food.expirationDate.toLocaleDateString()}
+              value={food.expiration_date.replaceAll("-", "/")}
             />
             <DetailTableRow
               label="カテゴリ"
@@ -71,13 +98,13 @@ export const FoodItem = (props) => {
                 <Chip
                   size="small"
                   label={
-                    STORAGES[food.storage]
-                      ? STORAGES[food.storage].name
+                    STORAGES[food.storage_status]
+                      ? STORAGES[food.storage_status].name
                       : STORAGES.other.name
                   }
                   style={{
-                    backgroundColor: STORAGES[food.storage]
-                      ? STORAGES[food.storage].color
+                    backgroundColor: STORAGES[food.storage_status]
+                      ? STORAGES[food.storage_status].color
                       : STORAGES.other.color,
                     color: "white",
                     fontWeight: "bold",
@@ -90,18 +117,22 @@ export const FoodItem = (props) => {
         <div className="flex justify-between">
           <div>
             <span className="mr-3">
-              <CustomIconButton onClick={() => {}}>
+              <CustomIconButton onClick={handleDeleteButtonClick}>
                 <DeleteIcon />
               </CustomIconButton>
             </span>
             <span>
-              <CustomIconButton onClick={() => {}}>
+              <CustomIconButton
+                onClick={() => {
+                  // TODO: 食品編集画面へ遷移
+                }}
+              >
                 <EditIcon />
               </CustomIconButton>
             </span>
           </div>
           <div>
-            <CustomButton onClick={() => {}}>完食</CustomButton>
+            <CustomButton onClick={handleConsumeButtonClick}>完食</CustomButton>
           </div>
         </div>
       </div>
