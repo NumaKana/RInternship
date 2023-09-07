@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import FoodApi from "../../api/FoodApi"
 
 export const Note = () => {
     const [foods, setFoods] = useState([])
@@ -14,12 +15,9 @@ export const Note = () => {
     }
 
     useEffect(() => {
-        fetch("http://localhost:8000/foods", {method: 'GET'})
-        .then((res) => res.json())
-        .then(json => {
-            setFoods(json)
-        })
-        .catch(() => console.log("error"));
+        const foodapi = new FoodApi;
+        foods = foodapi.getFoods()
+        console.log(foods)
     }, []);
 
     return (
