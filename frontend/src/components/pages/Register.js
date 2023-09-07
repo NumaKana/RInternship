@@ -12,12 +12,19 @@ import { FormControl } from '@mui/base/FormControl';
 import TextField from '@mui/material/TextField';
 import dayjs from 'dayjs';
 import { CustomButton } from "../atoms/CustomButton";
+import FoodApi from "../../api/FoodApi"
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../routes/routes";
 
 function Register(props) {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("野菜");
   const [state, setState] = useState("常温");
-  const [date, setDate] = useState();
+  const [date, setDate] = useState(dayjs().add(14, 'day'));
+
+  const foodApi = new FoodApi();
+  const navigate = useNavigate();
+
 
   const changeDate = (cat, val) => {
     let days = 0;
@@ -53,13 +60,14 @@ function Register(props) {
   }
 
   const submit = () => {
-
+    var data = { food_add: { food_name: { name }, category: { category }, expiration_date: { date }, storage_state: { state } } };
+    // foodApi.registerFood(data);
+    console.log(date.format());
+    navigate(ROUTES.HOME);
   }
 
   return (
-    <div  style={{ textAlign: "center" }}>
-      <p>食品登録</p>
-
+    <div style={{ textAlign: "center" }}>
       <div style={{ padding: "10px" }}>
         <p style={{ color: "#563F32", padding: "0px 24px", fontWeight: "bold" }}>食品名</p>
         <TextField id="filled-basic" label="食品名" variant="standard" onChange={(e) => { setName(e.target.value) }} />
