@@ -4,28 +4,31 @@ import json
 
 
 def get_panda_status(request):
-    # ensure that there is one panda status at least
-    # create one if there is no panda status
-    if PandaStatus.objects.count() < 1:
-        panda = PandaStatus(
-            level=0,
-            experience_points=0,
-            eaten_bamboo_count=0,
-            owned_normal_bamboo_count=0,
-            owned_premium_bamboo_count=0
-        )
-        panda.save()
-    panda = PandaStatus.objects.get(pk=1)
-    panda_status = {
-        "level": panda.level,
-        "exp": panda.experience_points,
-        "given_food": panda.eaten_bamboo_count,
-        "items": {
-            "normal_food": panda.owned_normal_bamboo_count,
-            "premium_food": panda.owned_premium_bamboo_count
+    if request.method == "GET":
+        # ensure that there is one panda status at least
+        # create one if there is no panda status
+        if PandaStatus.objects.count() < 1:
+            panda = PandaStatus(
+                level=0,
+                experience_points=0,
+                eaten_bamboo_count=0,
+                owned_normal_bamboo_count=0,
+                owned_premium_bamboo_count=0
+            )
+            panda.save()
+        panda = PandaStatus.objects.get(pk=1)
+        panda_status = {
+            "level": panda.level,
+            "exp": panda.experience_points,
+            "given_food": panda.eaten_bamboo_count,
+            "items": {
+                "normal_food": panda.owned_normal_bamboo_count,
+                "premium_food": panda.owned_premium_bamboo_count
+            }
         }
-    }
-    return JsonResponse({"panda_status": panda_status}, status=200)
+        return JsonResponse({"panda_status": panda_status}, status=200)
+    else:
+        return JsonResponse({"status": "error", "message": "method must be GET"}, status=405)
 
 def gain_exp(panda, normal_food_amount,premium_food_amount):
     panda_level = panda.level
