@@ -7,7 +7,7 @@ import { FoodItem } from "../molecules/FoodItem";
 import FoodApi from "../../api/FoodApi";
 import Edit from "../organisms/Edit";
 import Popup from "../organisms/Popup";
-import img from "../../img/sasa.png"
+import img from "../../img/sasa.png";
 
 const Foods = () => {
   const [foods, setFoods] = useState([]);
@@ -18,7 +18,7 @@ const Foods = () => {
 
   const changeOpen = (newOpen) => {
     setOpen(newOpen);
-  }
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -38,11 +38,17 @@ const Foods = () => {
   const openEdit = (newOpen, food) => {
     setEdit(newOpen);
     setFoodInfo(food);
-  }
+  };
 
   return (
     <div className="min-h-screen">
-      <Popup open={open} changeOpen={changeOpen} message1="完食！" message2="笹をゲットしました！はらぺこパンダに笹をプレゼントしましょう!" img={img}></Popup>
+      <Popup
+        open={open}
+        changeOpen={changeOpen}
+        message1="完食！"
+        message2="笹をゲットしました！はらぺこパンダに笹をプレゼントしましょう!"
+        img={img}
+      ></Popup>
       <div className="pt-3">
         {loading && <CircularProgress color="inherit" />}
         {foods
@@ -66,7 +72,12 @@ const Foods = () => {
             );
           })}
       </div>
-      <Edit open={edit} onEdit={fetchFoods} openEdit={openEdit} food={foodInfo}></Edit>
+      <Edit
+        open={edit}
+        onEdit={fetchFoods}
+        openEdit={openEdit}
+        food={foodInfo}
+      ></Edit>
     </div>
   );
 };
