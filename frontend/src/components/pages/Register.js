@@ -10,18 +10,14 @@ import Radio from '@mui/joy/Radio';
 import RadioGroup from '@mui/joy/RadioGroup';
 import { FormControl } from '@mui/base/FormControl';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import dayjs from 'dayjs';
 import { CustomButton } from "../atoms/CustomButton";
-
 
 function Register(props) {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("野菜");
   const [state, setState] = useState("常温");
   const [date, setDate] = useState();
-
-  const CATEGORIES = ["野菜", "肉", "魚", "牛乳", "卵", "果物"];
 
   const changeDate = (cat, val) => {
     let days = 0;
@@ -61,7 +57,7 @@ function Register(props) {
   }
 
   return (
-    <div>
+    <div  style={{ textAlign: "center" }}>
       <p>食品登録</p>
 
       <div style={{ padding: "10px" }}>
@@ -95,8 +91,6 @@ function Register(props) {
           </FormControl>
         </div>
       </div>
-
-
 
       <div style={{ padding: "10px" }}>
         <p style={{ color: "#563F32", padding: "0px 24px", fontWeight: "bold" }}>消費/賞味期限</p>
