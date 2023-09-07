@@ -20,7 +20,8 @@ function feed_sasa(){
       premium_food: 0
     }
   }
-  PandaApi.feed(item)
+  const panda = new PandaApi;
+  panda.feed(item);
 }
 
 function feed_premiumsasa(){
@@ -31,7 +32,8 @@ function feed_premiumsasa(){
       premium_food: 1
     }
   }
-  PandaApi.feed(item)
+  const panda = new PandaApi;
+  panda.feed(item);
 }
 
 function NextArrow(props) {
