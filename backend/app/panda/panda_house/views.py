@@ -35,7 +35,7 @@ def gain_exp(panda, normal_food_amount,premium_food_amount):
     required_exp_for_next_level = 50 * (1.1)**(panda_level) # ex: lv.0 panda needs 50 exp for lv.1
     if new_exp >= required_exp_for_next_level:
         panda_level = panda_level + 1
-    
+
     # update panda status
     panda.level = panda_level
     panda.experience_points = new_exp
@@ -58,7 +58,7 @@ def feed_panda(request):
                 return JsonResponse({"status": "error", "message": "you don't have enough food "}, status=400)
             else:
                 gain_exp(panda, normal_food_amount, premium_food_amount)
-                return JsonResponse({"status": "success", "message": "feeding success"}, status=200)#TODO: comply this message format 
+                return JsonResponse({"status": "success", "message": "feeding success"}, status=200)#TODO: comply this message format
         except KeyError:
             return JsonResponse({"status": "error", "message": "bad_json_format \n " + str(request_body)}, status=400)
     else:
