@@ -14,18 +14,19 @@ export const Note = () => {
         )
     }
 
-    // useEffect(() => {
-    //     const foodapi = new FoodApi;
-    //     foods = foodapi.getFoods()
-    //     console.log(foods)
-
-    //     for(let i=0; i<foods.length; i++){
-    //         if(daysLeft(foods[i]) <= 3) {
-    //             setLimitfood(limit_food + 1);
-    //         }
-    //     }
-
-    // }, []);
+    useEffect(() => {
+        const foodapi = new FoodApi;
+        foodapi.getFoods()
+            .then((res) => {
+                console.log(res)
+                var foods = res.food_list
+                for(let i=0; i<foods.length; i++){
+                    if(daysLeft(foods[i]) <= 3) {
+                        setLimitfood(limit_food + 1);
+                    }
+                }
+            })
+    }, []);
 
     return (
     <div className="w-1/2 text-left m-1">
