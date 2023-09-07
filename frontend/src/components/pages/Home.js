@@ -15,9 +15,11 @@ import prev_arrow from "../../img/icon/prev.png"
 function feed_sasa(){
   console.log("笹をあげました");
   const item = {
-    items: {
-      normal_food: 1,
-      premium_food: 0
+    panda_feed: {
+      items: {
+        normal_food: 1,
+        premium_food: 0
+      }
     }
   }
   const panda = new PandaApi;
@@ -27,9 +29,11 @@ function feed_sasa(){
 function feed_premiumsasa(){
   console.log("いい笹をあげました");
   const item = {
-    items: {
-      normal_food: 0,
-      premium_food: 1
+    panda_feed: {
+      items: {
+        normal_food: 0,
+        premium_food: 1
+      }
     }
   }
   const panda = new PandaApi;
@@ -81,7 +85,7 @@ function Home() {
               onClick={feed_sasa}>
               <div className="flex w-full">
                 <img className="w-11" src={sasa_golden} alt="sasa" />
-                <p className="relative top-2 w-full">いい笹をあげる</p>
+                <p className="relative top-2 w-full">笹をあげる</p>
               </div>
             </button>
           </div>
@@ -91,7 +95,7 @@ function Home() {
               onClick={feed_premiumsasa}>
               <div className="flex w-full">
                 <img className="w-11" src={sasa} alt="sasa" />
-                <p className="relative top-2 w-full">笹をあげる</p>
+                <p className="relative top-2 w-full">いい笹をあげる</p>
               </div>
             </button>
           </div>
