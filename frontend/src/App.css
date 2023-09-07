@@ -56,3 +56,8 @@
 .text-default {
   color: #333333;
 }
+
+body {
+  background-color: #fcfbf9;
+  color: #333333;
+}
