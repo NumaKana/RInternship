@@ -129,9 +129,12 @@ function Home() {
       >
         <HomeHeader level={level} given_food={given_food} />
         <img
-          className="absolute z-10 top-1/3 left-7"
+          className="fixed z-10 top-1/2 left-1/2"
           src={panda_amechan}
           alt="panda"
+          style={{
+            transform: `translate(-50%, -50%) scale(${50 + 20 * level}%)`,
+          }}
         />
 
         <Slider className="relative top-2/3 left-1/8" {...settings}>
