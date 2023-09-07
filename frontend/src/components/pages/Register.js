@@ -66,7 +66,7 @@ function Register(props) {
       return;
     }
     var d = date.format("YYYY-MM-DD");
-    var data = { "food_add": { "food_name": name, "category": category, "expiration_date": d, "storage_state": state } };
+    var data = { "food_add": { "food_name": name, "category": category, "expiration_date": d, "storage_status": state } };
     foodApi.registerFood(data);
     console.log(data);
     navigate(ROUTES.HOME);
@@ -80,7 +80,7 @@ function Register(props) {
           required id="filled-basic" label="食品名" variant="standard"
           onChange={(e) => {
             setName(e.target.value);
-            if (name == "") {
+            if (e.target.value == "") {
               setError(true);
             } else {
               setError(false);
