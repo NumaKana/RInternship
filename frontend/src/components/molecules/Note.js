@@ -20,17 +20,19 @@ export const Note = () => {
     foodapi.getFoods().then((res) => {
       console.log(res);
       var foods = res.food_list.map((item) => item.food);
+      let count = 0;
       for (let i = 0; i < foods.length; i++) {
         if (daysLeft(foods[i]) <= 3) {
-          setLimitfood(limit_food + 1);
+          count++;
         }
       }
+      setLimitfood(("00" + count).slice(-2));
     });
   }, []);
 
   return (
     <div className="w-1/2 text-left m-1">
-      <p className="text-sm">3日以内に期限が切れる商品</p>
+      <p className="text-sm">3日以内に期限が切れる食品</p>
       <p>
         <span className="text-xl font-bold">{limit_food}</span> 個
       </p>

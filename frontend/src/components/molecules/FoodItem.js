@@ -10,7 +10,7 @@ import { CATEGORIES, STORAGES } from "../../constants/food";
 import FoodApi from "../../api/FoodApi";
 
 export const FoodItem = (props) => {
-  const { food, onDelete, onConsume, openEdit } = props;
+  const { food, onDelete, onConsume, openEdit, changeOpen } = props;
   const [open, setOpen] = useState(false);
 
   const handleItemClick = () => {
@@ -42,6 +42,7 @@ export const FoodItem = (props) => {
       .then((res) => {
         console.log(res);
         onConsume();
+        changeOpen(true);
       })
       .catch((err) => {
         console.log(err);
