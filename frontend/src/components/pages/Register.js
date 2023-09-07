@@ -4,11 +4,11 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDatePicker } from '@mui/x-date-pickers/MobileDatePicker';
-import Select from '@mui/joy/Select';
-import Option from '@mui/joy/Option';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
 import Radio from '@mui/joy/Radio';
 import RadioGroup from '@mui/joy/RadioGroup';
-import { FormControl } from '@mui/base/FormControl';
 import TextField from '@mui/material/TextField';
 import dayjs from 'dayjs';
 import { CustomButton } from "../atoms/CustomButton";
@@ -18,8 +18,8 @@ import { ROUTES } from "../../routes/routes";
 
 function Register(props) {
   const [name, setName] = useState("");
-  const [category, setCategory] = useState("野菜");
-  const [state, setState] = useState("常温");
+  const [category, setCategory] = useState("vegetable");
+  const [state, setState] = useState("room");
   const [date, setDate] = useState(dayjs().add(14, 'day'));
   const [error, setError] = useState(false);
 
@@ -30,30 +30,30 @@ function Register(props) {
   const changeDate = (cat, val) => {
     let days = 0;
     switch (cat) {
-      case "野菜":
+      case "vegetable":
         days += 14;
         break;
-      case "肉":
+      case "meat":
         days += 1;
         break;
-      case "魚":
+      case "fish":
         days += 1;
         break;
-      case "牛乳":
+      case "milk":
         days += 1;
         break;
-      case "卵":
+      case "egg":
         days += 7;
         break;
-      case "果物":
+      case "fruit":
         days += 14;
         break;
     }
     switch (val) {
-      case "冷蔵":
+      case "fridge":
         days += 7;
         break;
-      case "冷凍":
+      case "freezer":
         days += 14;
         break;
     }
@@ -93,14 +93,20 @@ function Register(props) {
       <div style={{ padding: "10px" }}>
         <p style={{ color: "#563F32", padding: "0px 24px", fontWeight: "bold" }}>カテゴリー</p>
         <div style={{ color: "#563F32", width: "100px", margin: "auto" }}>
-          <Select defaultValue="野菜" onChange={(e) => { setCategory(e.target.innerText); changeDate(e.target.innerText, state); }}>
-            <Option value="野菜" color="#563F32">野菜</Option>
-            <Option value="肉">肉</Option>
-            <Option value="魚">魚</Option>
-            <Option value="牛乳">牛乳</Option>
-            <Option value="卵">卵</Option>
-            <Option value="果物">果物</Option>
-          </Select>
+          <FormControl sx={{ minWidth: "100px" }} variant="standard">
+            <Select labelId="demo-simple-select-standard-label"
+              id="demo-simple-select-standard"
+              defaultValue="vegetable"
+              onChange={(e) => { console.log(e); setCategory(e.target.value); changeDate(e.target.value, state); }}
+            >
+              <MenuItem value="vegetable">野菜</MenuItem>
+              <MenuItem value="meat">肉</MenuItem>
+              <MenuItem value="fish">魚</MenuItem>
+              <MenuItem value="milk">牛乳</MenuItem>
+              <MenuItem value="egg">卵</MenuItem>
+              <MenuItem value="fruit">果物</MenuItem>
+            </Select>
+          </FormControl>
         </div>
       </div>
 
@@ -108,10 +114,10 @@ function Register(props) {
         <p style={{ color: "#563F32", padding: "0px 24px", fontWeight: "bold" }}>保存場所</p>
         <div style={{ color: "#563F32", width: "250px", margin: "auto" }}>
           <FormControl>
-            <RadioGroup orientation="horizontal" defaultValue="常温" onChange={(e) => { setState(e.target.value); changeDate(category, e.target.value); }}>
-              <Radio value="常温" label="常温" variant="soft" color="warning" />
-              <Radio value="冷蔵" label="冷蔵" variant="soft" color="warning" />
-              <Radio value="冷凍" label="冷凍" variant="soft" color="warning" />
+            <RadioGroup orientation="horizontal" defaultValue="room" onChange={(e) => { setState(e.target.value); changeDate(category, e.target.value); }}>
+              <Radio value="room" label="常温" variant="soft" color="warning" />
+              <Radio value="fridge" label="冷蔵" variant="soft" color="warning" />
+              <Radio value="freezer" label="冷凍" variant="soft" color="warning" />
             </RadioGroup>
           </FormControl>
         </div>

@@ -36,7 +36,7 @@ export const STORAGES = {
   },
   freezer: {
     name: "冷凍",
-    color: "#aaddaa",
+    color: "#abe1fA",
   },
   room: {
     name: "常温",
