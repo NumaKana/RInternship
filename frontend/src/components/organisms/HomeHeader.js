@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Note } from "../molecules/Note.js"
 import { Status } from "../molecules/Status.js"
 
@@ -6,8 +6,15 @@ export const HomeHeader = () => {
     const [level, setLevel] = useState("1");
     const [given_food, setGivenfood] = useState("0");
 
-    const response = fetch("http://localhost:8000/panda")
-    console.log(response)
+    useEffect(() => {
+        fetch("http://localhost:8000/panda", {method: 'GET'})
+        .then((res) => res.json())
+        .then(json => {
+            setLevel(json.level);
+            setGivenfood(json.given_food);
+        })
+        .catch(() => console.log("error"));
+    }, []);
 
     return (
     <div　className="flex">
