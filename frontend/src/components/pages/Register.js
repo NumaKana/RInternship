@@ -21,6 +21,7 @@ function Register(props) {
   const [category, setCategory] = useState("野菜");
   const [state, setState] = useState("常温");
   const [date, setDate] = useState(dayjs().add(14, 'day'));
+  const [error, setError] = useState(false);
 
   const foodApi = new FoodApi();
   const navigate = useNavigate();
@@ -60,9 +61,14 @@ function Register(props) {
   }
 
   const submit = () => {
-    var data = { food_add: { food_name: { name }, category: { category }, expiration_date: { date }, storage_state: { state } } };
-    // foodApi.registerFood(data);
-    console.log(date.format());
+    if (name == "") {
+      setError(true);
+      return;
+    }
+    var d = date.format("YYYY-MM-DD");
+    var data = { "food_add": { "food_name": name, "category": category, "expiration_date": d, "storage_state": state } };
+    foodApi.registerFood(data);
+    console.log(data);
     navigate(ROUTES.HOME);
   }
 
@@ -70,7 +76,18 @@ function Register(props) {
     <div style={{ textAlign: "center" }}>
       <div style={{ padding: "10px" }}>
         <p style={{ color: "#563F32", padding: "0px 24px", fontWeight: "bold" }}>食品名</p>
-        <TextField id="filled-basic" label="食品名" variant="standard" onChange={(e) => { setName(e.target.value) }} />
+        <TextField
+          required id="filled-basic" label="食品名" variant="standard"
+          onChange={(e) => {
+            setName(e.target.value);
+            if (name == "") {
+              setError(true);
+            } else {
+              setError(false);
+            }
+          }}
+          error={error}
+        />
       </div>
 
       <div style={{ padding: "10px" }}>
