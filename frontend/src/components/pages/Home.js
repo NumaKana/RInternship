@@ -13,7 +13,7 @@ import next_arrow from "../../img/icon/next.png"
 import prev_arrow from "../../img/icon/prev.png"
 
 function NextArrow(props) {
-  const { className, style, onClick } = props;
+  const { style, onClick } = props;
   return (
     <div
       className="absolute slick-slider top-0 right-10 slick-initialized"
@@ -24,11 +24,11 @@ function NextArrow(props) {
 }
 
 function PrevArrow(props) {
-  const { onClick } = props;
+  const { style, onClick } = props;
   return (
     <div
       className="absolute slick-slider left-10 slick-initialized"
-      style={{ display: "block", backgroundImage:`url(${prev_arrow})`, width:"48px", height: "48px"}}
+      style={{ ...style, display: "block", backgroundImage:`url(${prev_arrow})`, width:"48px", height: "48px"}}
       onClick={onClick}
     />
   );
@@ -46,10 +46,11 @@ const settings = {
 };
 
 function Home() {
-  const [level, setLevel] = useState("1")
-  const [given_food, setGivenfood] = useState("0")
-  const [sasa_count, setSasa] = useState("0")
-  const [premium_count, setPremium] = useState("0")
+  const [level, setLevel] = useState(1)
+  const [given_food, setGivenfood] = useState(0)
+  const [exp, setExp] = useState(0)
+  const [sasa_count, setSasa] = useState(0)
+  const [premium_count, setPremium] = useState(0)
 
   function feed_sasa(){
     console.log("笹をあげました");
@@ -70,7 +71,10 @@ function Home() {
     panda.getPanda()
       .then((res) => {
         setLevel(res.panda_status.level);
-        setGivenfood(res.panda_status.given_food)
+        setGivenfood(res.panda_status.given_food);
+        setSasa(res.panda_status.items.normal_food);
+        setPremium(res.panda_status.items.premium_food);
+        setExp(res.panda_status.exp);
       })
   }
 
@@ -87,7 +91,7 @@ function Home() {
     const panda = new PandaApi;
     panda.feed(item)
       .catch((err) =>{
-        alert(err)
+        console.log(err)
       })
 
     panda.getPanda()
@@ -96,6 +100,7 @@ function Home() {
         setGivenfood(res.panda_status.given_food);
         setSasa(res.panda_status.items.normal_food);
         setPremium(res.panda_status.items.premium_food);
+        setExp(res.panda_status.exp);
       })
   }
   
@@ -108,14 +113,15 @@ function Home() {
         setGivenfood(res.panda_status.given_food);
         setSasa(res.panda_status.items.normal_food);
         setPremium(res.panda_status.items.premium_food);
+        setExp(res.panda_status.exp)
       })
   }, []);
 
   return (
     <div className="home">
       <div className="h-screen w-screen relative" style={{backgroundImage:`url(${haikei})`, backgroundRepeat: 'no-repeat'}}>
-        <HomeHeader level={level} given_food={given_food}/>
-        <img className="absolute z-10 top-1/3 left-7" src={panda_amechan} alt="panda" />
+        <HomeHeader level={level} given_food={given_food} exp={exp}/>
+        <img className="fixed z-10" style={{width:200+level*20, height:200+level*20, transform: "tranlate(-50%, -50%)"}} src={panda_amechan} alt="panda" />
 
         <Slider className="relative top-2/3 left-1/8" {...settings}>
           <div>
