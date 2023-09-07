@@ -10,7 +10,7 @@ import { CATEGORIES, STORAGES } from "../../constants/food";
 import FoodApi from "../../api/FoodApi";
 
 export const FoodItem = (props) => {
-  const { food, onDelete } = props;
+  const { food, onDelete, onConsume } = props;
   const [open, setOpen] = useState(false);
 
   const handleItemClick = () => {
@@ -23,22 +23,24 @@ export const FoodItem = (props) => {
       .deleteFood(food.food_id)
       .then((res) => {
         console.log(res);
-        // TODO: foods再取得
         onDelete();
       })
       .catch((err) => {
         console.log(err);
+        alert("削除に失敗しました");
       });
   };
   const handleConsumeButtonClick = () => {
     const foodApi = new FoodApi();
     foodApi
-      .consumeFood(food.id)
+      .consumeFood(food.food_id)
       .then((res) => {
         console.log(res);
+        onConsume();
       })
       .catch((err) => {
         console.log(err);
+        alert("処理に失敗しました");
       });
   };
 

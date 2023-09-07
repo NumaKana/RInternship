@@ -41,6 +41,7 @@ const Foods = () => {
                   key={food.food_id}
                   food={food}
                   onDelete={fetchFoods}
+                  onConsume={fetchFoods}
                 />
               </div>
             );
