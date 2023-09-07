@@ -5,12 +5,12 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { MobileDatePicker } from "@mui/x-date-pickers/MobileDatePicker";
 import Select from "@mui/joy/Select";
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
 import Option from "@mui/joy/Option";
 import Radio from "@mui/joy/Radio";
 import RadioGroup from "@mui/joy/RadioGroup";
-import { FormControl } from "@mui/base/FormControl";
+// import { FormControl } from "@mui/base/FormControl";
 import TextField from "@mui/material/TextField";
 import dayjs from "dayjs";
 import { CustomButton } from "../atoms/CustomButton";
@@ -22,7 +22,7 @@ function Register(props) {
   const [name, setName] = useState("");
   const [category, setCategory] = useState("vegetable");
   const [state, setState] = useState("room");
-  const [date, setDate] = useState(dayjs().add(14, 'day'));
+  const [date, setDate] = useState(dayjs().add(14, "day"));
   const [error, setError] = useState(false);
 
   const foodApi = new FoodApi();
@@ -71,7 +71,14 @@ function Register(props) {
       return;
     }
     var d = date.format("YYYY-MM-DD");
-    var data = { "food_add": { "food_name": name, "category": category, "expiration_date": d, "storage_status": state } };
+    var data = {
+      food_add: {
+        food_name: name,
+        category: category,
+        expiration_date: d,
+        storage_status: state,
+      },
+    };
     foodApi
       .registerFood(data)
       .then((res) => {
@@ -130,11 +137,16 @@ function Register(props) {
           カテゴリー
         </p>
         <div style={{ color: "#563F32" }}>
-          <FormControl sx={{ minWidth: "100px" }} variant="standard">
-            <Select labelId="demo-simple-select-standard-label"
+          <FormControl sx={{ width: "100%" }} variant="standard">
+            <Select
+              labelId="demo-simple-select-standard-label"
               id="demo-simple-select-standard"
               defaultValue="vegetable"
-              onChange={(e) => { console.log(e); setCategory(e.target.value); changeDate(e.target.value, state); }}
+              onChange={(e) => {
+                console.log(e);
+                setCategory(e.target.value);
+                changeDate(e.target.value, state);
+              }}
               sx={{ width: "100%" }}
             >
               <MenuItem value="vegetable">野菜</MenuItem>
@@ -161,10 +173,18 @@ function Register(props) {
         </p>
         <div style={{ color: "#563F32", width: "250px", margin: "auto" }}>
           <FormControl>
-            <RadioGroup orientation="horizontal" defaultValue="room" onChange={(e) => { setState(e.target.value); changeDate(category, e.target.value); }} className="flex justify-center">
-              <Radio value="room" label="常温" variant="soft" color="warning" />
-              <Radio value="fridge" label="冷蔵" variant="soft" color="warning" />
-              <Radio value="freezer" label="冷凍" variant="soft" color="warning" />
+            <RadioGroup
+              orientation="horizontal"
+              defaultValue="room"
+              onChange={(e) => {
+                setState(e.target.value);
+                changeDate(category, e.target.value);
+              }}
+              className="flex justify-center"
+            >
+              <Radio value="room" label="常温" />
+              <Radio value="fridge" label="冷蔵" />
+              <Radio value="freezer" label="冷凍" />
             </RadioGroup>
           </FormControl>
         </div>
