@@ -2,11 +2,20 @@ from .models import PandaStatus
 from django.http import JsonResponse
 import json
 
-# Create your views here.
 
 def get_panda_status(request):
     # ensure that there is one panda status at least
-    panda = PandaStatus.objects.get(pk=1) #TODO: error handling
+    # create one if there is no panda status
+    if PandaStatus.objects.count() < 1:
+        panda = PandaStatus(
+            level=0,
+            experience_points=0,
+            eaten_bamboo_count=0,
+            owned_normal_bamboo_count=0,
+            owned_premium_bamboo_count=0
+        )
+        panda.save()
+    panda = PandaStatus.objects.get(pk=1)
     panda_status = {
         "level": panda.level,
         "exp": panda.experience_points,
