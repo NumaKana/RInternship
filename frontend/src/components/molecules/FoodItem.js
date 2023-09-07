@@ -10,7 +10,7 @@ import { CATEGORIES, STORAGES } from "../../constants/food";
 import FoodApi from "../../api/FoodApi";
 
 export const FoodItem = (props) => {
-  const { food, onDelete, onConsume } = props;
+  const { food, onDelete, onConsume, changeOpen } = props;
   const [open, setOpen] = useState(false);
 
   const handleItemClick = () => {
@@ -30,6 +30,7 @@ export const FoodItem = (props) => {
         alert("削除に失敗しました");
       });
   };
+
   const handleConsumeButtonClick = () => {
     const foodApi = new FoodApi();
     foodApi
@@ -37,6 +38,7 @@ export const FoodItem = (props) => {
       .then((res) => {
         console.log(res);
         onConsume();
+        changeOpen(true);
       })
       .catch((err) => {
         console.log(err);
@@ -47,7 +49,7 @@ export const FoodItem = (props) => {
   const daysLeft =
     Math.floor(
       (new Date(food.expiration_date).getTime() - new Date().getTime()) /
-        (1000 * 60 * 60 * 24)
+      (1000 * 60 * 60 * 24)
     ) + 1;
 
   return (
