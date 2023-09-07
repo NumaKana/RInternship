@@ -25,10 +25,8 @@ function feed_sasa(){
   }
   const panda = new PandaApi;
   panda.feed(item)
-    .then((res) =>{
-      console.log(res)
-    }).catch((err) =>{
-      console.log(err)
+    .catch((err) =>{
+      alert(err)
     })
 }
 
@@ -44,10 +42,8 @@ function feed_premiumsasa(){
   }
   const panda = new PandaApi;
   panda.feed(item)
-    .then((res) =>{
-      console.log(res)
-    }).catch((err) =>{
-      console.log(err)
+    .catch((err) =>{
+      alert(err)
     })
 }
 
