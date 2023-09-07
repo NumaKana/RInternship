@@ -13,7 +13,7 @@ import next_arrow from "../../img/icon/next.png";
 import prev_arrow from "../../img/icon/prev.png";
 
 function NextArrow(props) {
-  const { className, style, onClick } = props;
+  const { style, onClick } = props;
   return (
     <div
       className="absolute slick-slider top-0 right-10 slick-initialized"
@@ -30,7 +30,7 @@ function NextArrow(props) {
 }
 
 function PrevArrow(props) {
-  const { onClick } = props;
+  const { style, onClick } = props;
   return (
     <div
       className="absolute slick-slider left-10 slick-initialized"
