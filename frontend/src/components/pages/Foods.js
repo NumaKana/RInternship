@@ -5,12 +5,15 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import { FoodItem } from "../molecules/FoodItem";
 import FoodApi from "../../api/FoodApi";
+import Edit from "../organisms/Edit";
 import Popup from "../organisms/Popup";
 import img from "../../img/sasa.png"
 
 const Foods = () => {
   const [foods, setFoods] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [edit, setEdit] = useState();
+  const [foodInfo, setFoodInfo] = useState(null);
   const [open, setOpen] = useState(false);
 
   const changeOpen = (newOpen) => {
@@ -32,6 +35,11 @@ const Foods = () => {
     });
   };
 
+  const openEdit = (newOpen, food) => {
+    setEdit(newOpen);
+    setFoodInfo(food);
+  }
+
   return (
     <div className="min-h-screen">
       <Popup open={open} changeOpen={changeOpen} message1="完食！" message2="笹をゲットしました！はらぺこパンダに笹をプレゼントしましょう!" img={img}></Popup>
@@ -51,12 +59,14 @@ const Foods = () => {
                   food={food}
                   onDelete={fetchFoods}
                   onConsume={fetchFoods}
+                  openEdit={openEdit}
                   changeOpen={changeOpen}
                 />
               </div>
             );
           })}
       </div>
+      <Edit open={edit} onEdit={fetchFoods} openEdit={openEdit} food={foodInfo}></Edit>
     </div>
   );
 };

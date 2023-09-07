@@ -10,7 +10,7 @@ import { CATEGORIES, STORAGES } from "../../constants/food";
 import FoodApi from "../../api/FoodApi";
 
 export const FoodItem = (props) => {
-  const { food, onDelete, onConsume, changeOpen } = props;
+  const { food, onDelete, onConsume, openEdit, changeOpen } = props;
   const [open, setOpen] = useState(false);
 
   const handleItemClick = () => {
@@ -30,6 +30,10 @@ export const FoodItem = (props) => {
         alert("削除に失敗しました");
       });
   };
+
+  const handleEditButtonClick = () => {
+    openEdit(true, food);
+  }
 
   const handleConsumeButtonClick = () => {
     const foodApi = new FoodApi();
@@ -125,9 +129,7 @@ export const FoodItem = (props) => {
             </span>
             <span>
               <CustomIconButton
-                onClick={() => {
-                  // TODO: 食品編集画面へ遷移
-                }}
+                onClick={handleEditButtonClick}
               >
                 <EditIcon />
               </CustomIconButton>
