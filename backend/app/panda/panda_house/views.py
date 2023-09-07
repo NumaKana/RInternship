@@ -28,12 +28,11 @@ def get_panda_status(request):
     return JsonResponse({"panda_status": panda_status})
 
 def gain_exp(panda, normal_food_amount,premium_food_amount):
-    #TODO: implement, see the miro board
     panda_level = panda.level
     # exp: 1 normal food = 10 exp, 1 premium food = 30 exp
     new_exp = panda.experience_points + normal_food_amount * 10 + premium_food_amount * 30
 
-    required_exp_for_next_level = 50 * (1.1)**(panda_level-1)
+    required_exp_for_next_level = 50 * (1.1)**(panda_level) # ex: lv.0 panda needs 50 exp for lv.1
     if new_exp >= required_exp_for_next_level:
         panda_level = panda_level + 1
     
