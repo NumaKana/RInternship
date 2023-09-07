@@ -22,39 +22,6 @@ function Edit(props) {
   const [date, setDate] = useState(props.date);
   const [open, setOpen] = useState(false);
 
-  const changeDate = (cat, val) => {
-    let days = 0;
-    switch (cat) {
-      case "野菜":
-        days += 14;
-        break;
-      case "肉":
-        days += 1;
-        break;
-      case "魚":
-        days += 1;
-        break;
-      case "牛乳":
-        days += 1;
-        break;
-      case "卵":
-        days += 7;
-        break;
-      case "果物":
-        days += 14;
-        break;
-    }
-    switch (val) {
-      case "冷蔵":
-        days += 7;
-        break;
-      case "冷凍":
-        days += 14;
-        break;
-    }
-    setDate(dayjs().add(days, "day"));
-  }
-
   const submit = () => {
 
   }
@@ -89,7 +56,7 @@ function Edit(props) {
                 menuPortalTarget={document.body}
                 styles={{ menuPortal: base => ({ ...base, zIndex: 1000 }) }}
                 defaultValue={category}
-                onChange={(e) => { setCategory(e.target.innerText); changeDate(e.target.innerText, state); }}
+                onChange={(e) => { setCategory(e.target.innerText); }}
               >
                 <Option value="野菜" color="#563F32">野菜</Option>
                 <Option value="肉">肉</Option>
@@ -105,7 +72,7 @@ function Edit(props) {
             <p style={{ color: "#563F32", padding: "0px 24px", fontWeight: "bold" }}>保存場所</p>
             <div style={{ color: "#563F32", width: "250px", margin: "auto" }}>
               <FormControl>
-                <RadioGroup orientation="horizontal" defaultValue={state} onChange={(e) => { setState(e.target.value); changeDate(category, e.target.value); }}>
+                <RadioGroup orientation="horizontal" defaultValue={state} onChange={(e) => { setState(e.target.value); }}>
                   <Radio value="常温" label="常温" variant="soft" color="warning" />
                   <Radio value="冷蔵" label="冷蔵" variant="soft" color="warning" />
                   <Radio value="冷凍" label="冷凍" variant="soft" color="warning" />

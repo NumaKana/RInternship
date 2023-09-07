@@ -26,7 +26,6 @@ function Register(props) {
   const foodApi = new FoodApi();
   const navigate = useNavigate();
 
-
   const changeDate = (cat, val) => {
     let days = 0;
     switch (cat) {
