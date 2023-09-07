@@ -14,7 +14,7 @@ def get_first_panda_or_create_one():
             owned_premium_bamboo_count=0
         )
         panda.save()
-    return PandaStatus.objects.get(pk=1)
+    return PandaStatus.objects.all()[0]
 
 def get_panda_status(request):
     if request.method == "GET":
