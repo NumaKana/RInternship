@@ -76,7 +76,7 @@ def consume_food(request, id):
         food = Foods.objects.get(pk=id)
         food.delete()
 
-        panda_status = PandaStatus.objects.get(pk=1)
+        panda_status = PandaStatus.objects.all()[0]
 
         rand_value = random.random()
         if rand_value < 0.7:
