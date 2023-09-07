@@ -57,7 +57,7 @@ function Register(props) {
   }
 
   return (
-    <div  style={{ textAlign: "center" }}>
+    <div style={{ textAlign: "center" }}>
       <p>食品登録</p>
 
       <div style={{ padding: "10px" }}>

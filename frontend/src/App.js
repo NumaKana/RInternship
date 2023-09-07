@@ -10,6 +10,7 @@ import "./components/pages/Register";
 import Edit from "./components/organisms/Edit";
 import dayjs from "dayjs";
 import Popup from "./components/organisms/Popup";
+import img from "./img/panda_good.gif";
 
 function App() {
   return (
@@ -36,7 +37,7 @@ function App() {
           }
         />
       </Routes> */}
-      <Popup message="congrats"/>
+      <Popup message="congrats" img={img} notOpen={false} message1={"HELLO"} message2={"Have a good day!!!"}/>
       <NavBar />
     </div>
   );
