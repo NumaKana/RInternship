@@ -19,7 +19,7 @@ export const FoodItem = (props) => {
 
   const daysLeft =
     Math.floor(
-      (food.expirationDate.getTime() - new Date().getTime()) /
+      (new Date(food.expiration_date).getTime() - new Date().getTime()) /
         (1000 * 60 * 60 * 24)
     ) + 1;
 
@@ -30,7 +30,7 @@ export const FoodItem = (props) => {
       onClick={handleItemClick}
     >
       <div className="flex justify-between items-center">
-        <p>{food.name}</p>
+        <p>{food.food_name}</p>
         <p>
           あと
           <span className="font-bold" style={{ color: "#aa0000" }}>
@@ -43,7 +43,7 @@ export const FoodItem = (props) => {
           <tbody>
             <DetailTableRow
               label="消費 / 賞味期限"
-              value={food.expirationDate.toLocaleDateString()}
+              value={food.expiration_date}
             />
             <DetailTableRow
               label="カテゴリ"
@@ -71,13 +71,13 @@ export const FoodItem = (props) => {
                 <Chip
                   size="small"
                   label={
-                    STORAGES[food.storage]
-                      ? STORAGES[food.storage].name
+                    STORAGES[food.storage_status]
+                      ? STORAGES[food.storage_status].name
                       : STORAGES.other.name
                   }
                   style={{
-                    backgroundColor: STORAGES[food.storage]
-                      ? STORAGES[food.storage].color
+                    backgroundColor: STORAGES[food.storage_status]
+                      ? STORAGES[food.storage_status].color
                       : STORAGES.other.color,
                     color: "white",
                     fontWeight: "bold",

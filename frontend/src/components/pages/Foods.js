@@ -10,18 +10,14 @@ const Foods = () => {
     const foodApi = new FoodApi();
     foodApi.getFoods().then((res) => {
       console.log(res);
-      const food_list = res.food_list;
+      const food_list = res.food_list.map((item) => item.food);
       setFoods(food_list);
     });
   }, []);
   return (
     <div className="min-h-screen">
       <div className="pt-3">
-        <FoodList
-          foods={[...Array(10)].map(() => {
-            return exampleFood;
-          })}
-        />
+        <FoodList foods={foods} />
       </div>
     </div>
   );
