@@ -5,9 +5,10 @@ export const Note = () => {
     const [limit_food, setLimitfood] = useState(0)
 
     const daysLeft = (food) => {
+        console.log(food.expiration_date)
         return(
             Math.floor(
-                (new Date(food.food.expiration_date).getTime() - new Date().getTime()) /
+                (new Date(food.expiration_date).getTime() - new Date().getTime()) /
                   (1000 * 60 * 60 * 24)
             ) + 1
         )
