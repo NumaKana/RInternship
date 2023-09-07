@@ -83,12 +83,12 @@ function Register(props) {
       .registerFood(data)
       .then((res) => {
         console.log(res);
+        navigate(ROUTES.FOODS);
       })
       .catch((err) => {
         console.log(err);
         alert("failed to register");
       });
-    navigate(ROUTES.HOME);
   };
 
   return (

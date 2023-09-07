@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import FoodApi from "../../api/FoodApi";
 
 export const Note = () => {
-  const [limit_food, setLimitfood] = useState(0);
+  const [limit_food, setLimitfood] = useState("00");
 
   const daysLeft = (food) => {
     console.log(food.expiration_date);

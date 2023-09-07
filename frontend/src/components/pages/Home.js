@@ -57,7 +57,7 @@ const settings = {
 };
 
 function Home() {
-  const [level, setLevel] = useState("1");
+  const [level, setLevel] = useState("0");
   const [given_food, setGivenfood] = useState("0");
   const [sasa_count, setSasa] = useState("0");
   const [premium_count, setPremium] = useState("0");
