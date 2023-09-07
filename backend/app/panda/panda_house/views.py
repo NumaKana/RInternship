@@ -2,21 +2,23 @@ from .models import PandaStatus
 from django.http import JsonResponse
 import json
 
+def get_first_panda_or_create_one():
+    # ensure that there is one panda status at least
+    # create one if there is no panda status
+    if PandaStatus.objects.count() < 1:
+        panda = PandaStatus(
+            level=0,
+            experience_points=0,
+            eaten_bamboo_count=0,
+            owned_normal_bamboo_count=0,
+            owned_premium_bamboo_count=0
+        )
+        panda.save()
+    return PandaStatus.objects.get(pk=1)
 
 def get_panda_status(request):
     if request.method == "GET":
-        # ensure that there is one panda status at least
-        # create one if there is no panda status
-        if PandaStatus.objects.count() < 1:
-            panda = PandaStatus(
-                level=0,
-                experience_points=0,
-                eaten_bamboo_count=0,
-                owned_normal_bamboo_count=0,
-                owned_premium_bamboo_count=0
-            )
-            panda.save()
-        panda = PandaStatus.objects.get(pk=1)
+        panda = get_first_panda_or_create_one()
         panda_status = {
             "level": panda.level,
             "exp": panda.experience_points,
@@ -35,7 +37,11 @@ def gain_exp(panda, normal_food_amount,premium_food_amount):
     # exp: 1 normal food = 10 exp, 1 premium food = 30 exp
     new_exp = panda.experience_points + normal_food_amount * 10 + premium_food_amount * 30
 
-    required_exp_for_next_level = 50 * (1.1)**(panda_level) # ex: lv.0 panda needs 50 exp for lv.1
+    # level up
+    # ratio of increasing exps required to level up
+    r = 1.1  # do not set this value to 1.0 or change the formula below
+    # those exps are sum of required exps for each level
+    required_exp_for_next_level = 50 * (r**(panda_level+1)-1) / (r-1)
     if new_exp >= required_exp_for_next_level:
         panda_level = panda_level + 1
     
@@ -51,19 +57,21 @@ def gain_exp(panda, normal_food_amount,premium_food_amount):
 def feed_panda(request):
     if request.method == "POST":
         request_body = json.loads(request.body)
-        print(request_body)
         try:
             normal_food_amount = request_body["panda_feed"]["items"]["normal_food"]
             premium_food_amount = request_body["panda_feed"]["items"]["premium_food"]
 
-            panda = PandaStatus.objects.get(pk=1)
+            panda = get_first_panda_or_create_one()
             if panda.owned_normal_bamboo_count < normal_food_amount or panda.owned_premium_bamboo_count < premium_food_amount:
                 return JsonResponse({"status": "error", "message": "you don't have enough food "}, status=400)
             else:
-                gain_exp(panda, normal_food_amount, premium_food_amount)
+                # not to give negative amount of food
+                giving_normal_food_amount = max(normal_food_amount, 0)
+                giving_premium_food_amount = max(premium_food_amount, 0)
+                gain_exp(panda, giving_normal_food_amount, giving_premium_food_amount)
                 return JsonResponse({"status": "success", "message": "feeding success"}, status=200)#TODO: comply this message format 
         except KeyError:
-            return JsonResponse({"status": "error", "message": "bad_json_format \n " + str(request_body)}, status=400)
+            return JsonResponse({"status": "error", "message": "bad json format \n " + str(request_body)}, status=400)
     else:
         return JsonResponse({"status": "error", "message": "method must be POST"}, status=405)
 
