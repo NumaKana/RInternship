@@ -137,15 +137,23 @@ function Home() {
           }}
         />
 
-        <Slider className="relative top-2/3 left-1/8" {...settings}>
+        <Slider
+          className="relative top-2/3 left-1/8"
+          style={{ top: "62%" }}
+          {...settings}
+        >
           <div>
             <button
-              className="inset-y-2/3 inset-x-1/4 h-12 w-48 overflow-hidden rounded-2xl bg-base text-lg font-bold text-main"
+              className="inset-y-2/3 inset-x-1/4 overflow-hidden rounded-full bg-base text-lg font-bold text-main px-3 py-2"
+              style={{
+                border: "solid 3px #563f32",
+                // boxShadow: "0px 3px 5px gray",
+              }}
               onClick={feed_sasa}
             >
               <div className="flex w-full">
                 <img className="w-11" src={sasa} alt="sasa" />
-                <p className="text-xs">{sasa_count}</p>
+                <p className="">{sasa_count}</p>
                 <p className="relative top-2 w-full">笹をあげる</p>
               </div>
             </button>
@@ -153,19 +161,21 @@ function Home() {
 
           <div>
             <button
-              className="inset-y-2/3 inset-x-1/4 h-12 w-48 overflow-hidden rounded-2xl bg-base text-lg font-bold text-main"
+              className="inset-y-2/3 inset-x-1/4 overflow-hidden rounded-full bg-base text-lg font-bold text-main px-3 py-2"
               onClick={feed_premiumsasa}
+              style={{
+                border: "solid 3px #563f32",
+                // boxShadow: "0px 3px 5px gray",
+              }}
             >
               <div className="flex w-full">
                 <img className="w-11" src={sasa_golden} alt="sasa" />
-                <p className="text_xs">{premium_count}</p>
+                <p className="">{premium_count}</p>
                 <p className="relative top-2 w-full">いい笹をあげる</p>
               </div>
             </button>
           </div>
         </Slider>
-
-        <NavBar />
       </div>
     </div>
   );
