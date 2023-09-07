@@ -9,11 +9,12 @@ import Register from "./components/pages/Register";
 import "./components/pages/Register";
 import Edit from "./components/organisms/Edit";
 import dayjs from "dayjs";
+import Popup from "./components/organisms/Popup";
 
 function App() {
   return (
     <div className="App">
-      <Routes>
+      {/* <Routes>
         <Route path="/" element={<Navigate replace to="/home" />} />
         <Route path="/home" element={<Home />} />
         <Route
@@ -34,7 +35,8 @@ function App() {
             </>
           }
         />
-      </Routes>
+      </Routes> */}
+      <Popup message="congrats"/>
       <NavBar />
     </div>
   );
