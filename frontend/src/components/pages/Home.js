@@ -24,7 +24,12 @@ function feed_sasa(){
     }
   }
   const panda = new PandaApi;
-  panda.feed(item);
+  panda.feed(item)
+    .then((res) =>{
+      console.log(res)
+    }).catch((err) =>{
+      console.log(err)
+    })
 }
 
 function feed_premiumsasa(){
@@ -38,7 +43,12 @@ function feed_premiumsasa(){
     }
   }
   const panda = new PandaApi;
-  panda.feed(item);
+  panda.feed(item)
+    .then((res) =>{
+      console.log(res)
+    }).catch((err) =>{
+      console.log(err)
+    })
 }
 
 function NextArrow(props) {
@@ -76,10 +86,10 @@ const settings = {
 
 function Home() {
   return (
-    <div className="App">
+    <div className="home">
       <div className="h-screen w-screen relative" style={{backgroundImage:`url(${haikei})`, backgroundRepeat: 'no-repeat'}}>
         <HomeHeader />
-        <img className="absolute z-10 top-1/3 left-auto" src={panda_amechan} alt="panda" />
+        <img className="absolute z-10 top-1/3 left-7" src={panda_amechan} alt="panda" />
 
         <Slider className="relative top-2/3 left-1/8" {...settings}>
           <div>
