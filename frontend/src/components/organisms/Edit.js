@@ -13,21 +13,59 @@ import TextField from '@mui/material/TextField';
 import dayjs from 'dayjs';
 import { CustomButton } from "../atoms/CustomButton";
 import { SwipeableDrawer } from '@mui/material';
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "../../routes/routes";
+import FoodApi from "../../api/FoodApi"
 
 function Edit(props) {
-  const [id, setID] = useState(props.id);
-  const [name, setName] = useState(props.name);
-  const [category, setCategory] = useState(props.category);
-  const [state, setState] = useState(props.state);
-  const [date, setDate] = useState(props.date);
-  const [open, setOpen] = useState(false);
+  const [id, setID] = useState();
+  const [name, setName] = useState();
+  const [category, setCategory] = useState();
+  const [state, setState] = useState();
+  const [date, setDate] = useState();
+  const [open, setOpen] = useState();
+  const [error, setError] = useState(false);
+
+  const foodApi = new FoodApi();
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    setOpen(props.open);
+    // console.log(props.food);
+    if (props.open && (props.food !== null)) {
+      const food = props.food;
+      setID(food.id);
+      setName(food.food_name);
+      setCategory(food.category);
+      setState(food.storage_status);
+      setDate(dayjs(food.expiration_date));
+    }
+  }, [props.open, props.food]);
 
   const submit = () => {
-
+    if (name === "") {
+      setError(true);
+      return;
+    }
+    var d = date.format("YYYY-MM-DD");
+    var data = { "food_edit": { "food_id": id, "food_name": name, "category": category, "expiration_date": d, "storage_status": state } };
+    foodApi
+      .editFood(id, data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("failed to edit");
+      });
+    console.log(data);
+    setOpen(false);
+    navigate(ROUTES.FOODS);
   }
 
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
+    props.openEdit(newOpen);
   }
 
   return (
@@ -46,7 +84,17 @@ function Edit(props) {
           </div>
           <div style={{ padding: "10px" }}>
             <p style={{ color: "#563F32", padding: "0px 24px", fontWeight: "bold" }}>食品名</p>
-            <TextField defaultValue={name} id="filled-basic" label="食品名" variant="standard" onChange={(e) => { setName(e.target.value) }} />
+            <TextField required defaultValue={name} value={name} id="filled-basic" variant="standard"
+              onChange={(e) => {
+                setName(e.target.value);
+                if (e.target.value === "") {
+                  setError(true);
+                } else {
+                  setError(false);
+                }
+              }}
+              error={error}
+            />
           </div>
 
           <div style={{ padding: "10px" }}>
@@ -55,7 +103,7 @@ function Edit(props) {
               <Select
                 menuPortalTarget={document.body}
                 styles={{ menuPortal: base => ({ ...base, zIndex: 1000 }) }}
-                defaultValue={category}
+                value={category}
                 onChange={(e) => { setCategory(e.target.innerText); }}
               >
                 <Option value="野菜" color="#563F32">野菜</Option>
@@ -72,7 +120,7 @@ function Edit(props) {
             <p style={{ color: "#563F32", padding: "0px 24px", fontWeight: "bold" }}>保存場所</p>
             <div style={{ color: "#563F32", width: "250px", margin: "auto" }}>
               <FormControl>
-                <RadioGroup orientation="horizontal" defaultValue={state} onChange={(e) => { setState(e.target.value); }}>
+                <RadioGroup orientation="horizontal" value={state} onChange={(e) => { setState(e.target.value); }}>
                   <Radio value="常温" label="常温" variant="soft" color="warning" />
                   <Radio value="冷蔵" label="冷蔵" variant="soft" color="warning" />
                   <Radio value="冷凍" label="冷凍" variant="soft" color="warning" />
@@ -88,7 +136,6 @@ function Edit(props) {
                 <DemoContainer components={["MobileDatePicker"]}>
                   <MobileDatePicker
                     value={date}
-                    disablePast={true}
                     onChange={(value) => { setDate(value) }}
                   />
                 </DemoContainer>

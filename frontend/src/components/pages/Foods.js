@@ -5,10 +5,14 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import { FoodItem } from "../molecules/FoodItem";
 import FoodApi from "../../api/FoodApi";
+import Edit from "../organisms/Edit";
 
 const Foods = () => {
   const [foods, setFoods] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [edit, setEdit] = useState();
+  const [foodInfo, setFoodInfo] = useState(null);
+
   useEffect(() => {
     setLoading(true);
     fetchFoods().then(() => {
@@ -23,6 +27,11 @@ const Foods = () => {
       setFoods(food_list);
     });
   };
+
+  const openEdit = (newOpen, food) => {
+    setEdit(newOpen);
+    setFoodInfo(food);
+  }
 
   return (
     <div className="min-h-screen">
@@ -42,11 +51,13 @@ const Foods = () => {
                   food={food}
                   onDelete={fetchFoods}
                   onConsume={fetchFoods}
+                  openEdit={openEdit}
                 />
               </div>
             );
           })}
       </div>
+      <Edit open={edit} openEdit={openEdit} food={foodInfo}></Edit>
     </div>
   );
 };

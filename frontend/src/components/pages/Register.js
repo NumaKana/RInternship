@@ -47,6 +47,8 @@ function Register(props) {
       case "果物":
         days += 14;
         break;
+      default:
+        break;
     }
     switch (val) {
       case "冷蔵":
@@ -55,19 +57,28 @@ function Register(props) {
       case "冷凍":
         days += 14;
         break;
+      default:
+        break;
     }
     setDate(dayjs().add(days, "day"));
   }
 
   const submit = () => {
-    if (name == "") {
+    if (name === "") {
       setError(true);
       return;
     }
     var d = date.format("YYYY-MM-DD");
     var data = { "food_add": { "food_name": name, "category": category, "expiration_date": d, "storage_status": state } };
-    foodApi.registerFood(data);
-    console.log(data);
+    foodApi
+      .registerFood(data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("failed to register");
+      });
     navigate(ROUTES.HOME);
   }
 
@@ -79,7 +90,7 @@ function Register(props) {
           required id="filled-basic" label="食品名" variant="standard"
           onChange={(e) => {
             setName(e.target.value);
-            if (e.target.value == "") {
+            if (e.target.value === "") {
               setError(true);
             } else {
               setError(false);
