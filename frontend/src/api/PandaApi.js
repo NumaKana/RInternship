@@ -6,10 +6,10 @@ export default class PandaApi {
   }
 
   async getPanda() {
-    return this.apiClient.get("/panda");
+    return this.apiClient.get("/panda/");
   }
 
   async feed(items) {
-    return this.apiClient.post("/panda/feed", items);
+    return this.apiClient.post("/panda/feed/", items);
   }
 }
