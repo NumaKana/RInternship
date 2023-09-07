@@ -1,6 +1,7 @@
 import "../../App.css";
 import { NavBar } from "../organisms/NavBar.js"
 import Slider from "react-slick";
+import PandaApi from "../../api/PandaApi";
 
 import haikei from "../../img/haikei.png"
 import panda_amechan from "../../img/panda_amechan.gif"
@@ -13,10 +14,24 @@ import prev_arrow from "../../img/icon/prev.png"
 
 function feed_sasa(){
   console.log("笹をあげました");
+  const item = {
+    items: {
+      normal_food: 1,
+      premium_food: 0
+    }
+  }
+  PandaApi.feed(item)
 }
 
 function feed_premiumsasa(){
   console.log("いい笹をあげました");
+  const item = {
+    items: {
+      normal_food: 0,
+      premium_food: 1
+    }
+  }
+  PandaApi.feed(item)
 }
 
 function NextArrow(props) {
