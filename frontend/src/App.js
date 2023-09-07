@@ -7,6 +7,8 @@ import { Header } from "./components/organisms/Header";
 import { NavBar } from "./components/organisms/NavBar";
 import Register from "./components/pages/Register";
 import "./components/pages/Register";
+import Edit from "./components/organisms/Edit";
+import dayjs from "dayjs";
 
 function App() {
   return (
