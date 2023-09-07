@@ -1,5 +1,6 @@
 import "../../App.css";
 import { NavBar } from "../organisms/NavBar.js"
+import { HomeHeader } from "../organisms/HomeHeader.js";
 import Slider from "react-slick";
 import PandaApi from "../../api/PandaApi";
 
@@ -77,9 +78,10 @@ function Home() {
   return (
     <div className="App">
       <div className="h-screen w-screen relative" style={{backgroundImage:`url(${haikei})`, backgroundRepeat: 'no-repeat'}}>
+        <HomeHeader />
         <img className="absolute z-10 top-1/3 left-auto" src={panda_amechan} alt="panda" />
 
-        <Slider className="top-3/4 left-1/8" {...settings}>
+        <Slider className="relative top-2/3 left-1/8" {...settings}>
           <div>
             <button className="inset-y-2/3 inset-x-1/4 h-12 w-48 overflow-hidden rounded-2xl bg-base text-lg font-bold text-main"
               onClick={feed_sasa}>
