@@ -5,6 +5,7 @@ export const Status = () => {
             <p>Lv. <span>1</span></p>
             <p>これまで食べた笹の数：<span>0</span></p>
         </div>
+        <div className="w-1/2 h-3  left-1/4 bg-green z-10"></div>
 
     </div>
     );
