@@ -4,10 +4,10 @@ export const FoodList = (props) => {
   const { foods = [] } = props;
   return (
     <div>
-      {foods.map((food, index) => {
+      {foods.map((food) => {
         return (
           <div className="p-1">
-            <FoodItem key={index} food={food} />
+            <FoodItem key={food.food_id} food={food} />
           </div>
         );
       })}

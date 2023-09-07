@@ -123,8 +123,8 @@ def delete_food(request, id):
 
     try:
         food = Foods.objects.get(pk=id)
-
         food.delete()
+        return JsonResponse({"status": "success", "message": "Food deleted successfully"})
 
     except Foods.DoesNotExist:
         return JsonResponse({"status": "error", "message": "Food with given id does not exist"}, status=404)
