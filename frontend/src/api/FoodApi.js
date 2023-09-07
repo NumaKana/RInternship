@@ -14,7 +14,7 @@ export default class FoodApi {
   }
 
   async consumeFood(id) {
-    return this.apiClient.post(`/foods/${id}/comsume/`);
+    return this.apiClient.post(`/foods/${id}/`);
   }
 
   async editFood(id, food) {
