@@ -28,7 +28,7 @@ function PrevArrow(props) {
   return (
     <div
       className="absolute slick-slider left-10 slick-initialized"
-      style={{ ...style, display: "block", backgroundImage:`url(${prev_arrow})`, width:"48px", height: "48px"}}
+      style={{ ...style, zIndex: 10,  display: "block", backgroundImage:`url(${prev_arrow})`, width:"48px", height: "48px"}}
       onClick={onClick}
     />
   );
@@ -96,7 +96,7 @@ function Home() {
 
     panda.getPanda()
       .then((res) => {
-        setLevel(res.level);
+        setLevel(res.panda_status.level);
         setGivenfood(res.panda_status.given_food);
         setSasa(res.panda_status.items.normal_food);
         setPremium(res.panda_status.items.premium_food);
