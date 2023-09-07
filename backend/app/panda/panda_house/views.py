@@ -25,7 +25,7 @@ def get_panda_status(request):
             "premium_food": panda.owned_premium_bamboo_count
         }
     }
-    return JsonResponse({"panda_status": panda_status})
+    return JsonResponse({"panda_status": panda_status}, status=200)
 
 def gain_exp(panda, normal_food_amount,premium_food_amount):
     panda_level = panda.level
@@ -55,12 +55,12 @@ def feed_panda(request):
 
             panda = PandaStatus.objects.get(pk=1)
             if panda.owned_normal_bamboo_count < normal_food_amount or panda.owned_premium_bamboo_count < premium_food_amount:
-                return JsonResponse({"error": "not enough food"}, status=400)
+                return JsonResponse({"status": "error", "message": "you don't have enough food "}, status=400)
             else:
                 gain_exp(panda, normal_food_amount, premium_food_amount)
                 return JsonResponse({"status": "success", "message": "feeding success"}, status=200)#TODO: comply this message format 
         except KeyError:
             return JsonResponse({"status": "error", "message": "bad_json_format \n " + str(request_body)}, status=400)
     else:
-        return JsonResponse({"error": "method must be POST"}, status=405)
+        return JsonResponse({"status": "error", "message": "method must be POST"}, status=405)
 
