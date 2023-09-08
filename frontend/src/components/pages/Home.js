@@ -50,6 +50,7 @@ function Home() {
   const [given_food, setGivenfood] = useState("0");
   const [sasa_count, setSasa] = useState("0");
   const [premium_count, setPremium] = useState("0");
+  const [exp, setExp] = useState("0");
 
   function feed_sasa(){
     const item = {
