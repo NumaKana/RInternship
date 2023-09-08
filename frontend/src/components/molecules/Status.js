@@ -1,12 +1,15 @@
 export const Status = (props) => {
   var now_exp = props.exp;
+  console.log("level>>" + props.level);
   console.log("now_exp>>" + now_exp);
-  var next_exp = 50 * ((1.1 ^ (props.level + 1) - 1) / (1.1 - 1));
+  var next_exp = 50 * ((1.1 ** (props.level + 1.0) - 1.0) / (1.1 - 1.0));
+  var before_exp = 50 * ((1.1 ** (props.level) - 1.0) / (1.1 - 1.0));
   console.log("next_exp>>" + next_exp);
+  console.log("before_exp>>" + before_exp);
   if (next_exp == 0) {
     var width = 0;
   } else {
-    var width = Math.floor((160 * now_exp) / next_exp);
+    var width = Math.floor((160 * (now_exp - before_exp)) / (next_exp - before_exp));
   }
   console.log("width>>" + width);
   return (
