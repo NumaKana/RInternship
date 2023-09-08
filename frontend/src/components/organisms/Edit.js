@@ -34,6 +34,7 @@ function Edit(props) {
         setCategory(props.food.category);
         setState(props.food.storage_status);
         setDate(dayjs(props.food.expiration_date));
+        setError(false);
       }
 
       setOpen(props.open);
