@@ -122,6 +122,7 @@ function Home() {
       setGivenfood(res.panda_status.given_food);
       setSasa(res.panda_status.items.normal_food);
       setPremium(res.panda_status.items.premium_food);
+      setExp(res.panda_status.exp);
     });
   }, []);
 
