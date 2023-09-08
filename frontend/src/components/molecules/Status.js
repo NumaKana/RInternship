@@ -16,8 +16,6 @@ export const Status = (props) => {
             <div className="h-2 relative bg-green-300 z-10" style={{width:`${width}px`}} ></div>
             <p className="text-xs">これまで食べた笹の数：<span>{props.given_food}</span></p>
         </div>
-
     </div>
-    );
-  };
-  
+  );
+};
