@@ -85,23 +85,27 @@ function Home() {
       },
     };
     const panda = new PandaApi();
-    panda.feed(item).catch((err) => {
-      console.log(err);
-    });
-
     panda
-      .getPanda()
-      .then((res) => {
-        checkLevel(res.panda_status.level);
-        setLevel(res.panda_status.level);
-        setGivenfood(res.panda_status.given_food);
-        setSasa(res.panda_status.items.normal_food);
-        setPremium(res.panda_status.items.premium_food);
-        setExp(res.panda_status.exp);
+      .feed(item)
+      .then(() => {
+        panda
+          .getPanda()
+          .then((res) => {
+            checkLevel(res.panda_status.level);
+            setLevel(res.panda_status.level);
+            setGivenfood(res.panda_status.given_food);
+            setSasa(res.panda_status.items.normal_food);
+            setPremium(res.panda_status.items.premium_food);
+            setExp(res.panda_status.exp);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
       })
       .catch((err) => {
         console.log(err);
       });
+
     console.log("笹をあげました");
   }
 
@@ -116,18 +120,22 @@ function Home() {
       },
     };
     const panda = new PandaApi();
-    panda.feed(item).catch((err) => {
-      console.log(err);
-    });
-
-    panda.getPanda().then((res) => {
-      checkLevel(res.panda_status.level);
-      setLevel(res.panda_status.level);
-      setGivenfood(res.panda_status.given_food);
-      setSasa(res.panda_status.items.normal_food);
-      setPremium(res.panda_status.items.premium_food);
-      setExp(res.panda_status.exp);
-    });
+    panda
+      .feed(item)
+      .then(() => {
+        panda.getPanda().then((res) => {
+          console.log(res);
+          checkLevel(res.panda_status.level);
+          setLevel(res.panda_status.level);
+          setGivenfood(res.panda_status.given_food);
+          setSasa(res.panda_status.items.normal_food);
+          setPremium(res.panda_status.items.premium_food);
+          setExp(res.panda_status.exp);
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   useEffect(() => {
