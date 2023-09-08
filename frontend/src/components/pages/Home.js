@@ -69,11 +69,10 @@ function Home() {
   const [exp, setExp] = useState("0");
   const [open, setOpen] = useState(false);
 
-  const changeLevel = (l) => {
+  const checkLevel = (l) => {
     if (l !== level) {
       setOpen(true);
     }
-    setLevel(l);
   };
 
   function feed_sasa() {
@@ -93,7 +92,8 @@ function Home() {
     panda
       .getPanda()
       .then((res) => {
-        changeLevel(res.panda_status.level);
+        checkLevel(res.panda_status.level);
+        setLevel(res.panda_status.level);
         setGivenfood(res.panda_status.given_food);
         setSasa(res.panda_status.items.normal_food);
         setPremium(res.panda_status.items.premium_food);
@@ -121,7 +121,7 @@ function Home() {
     });
 
     panda.getPanda().then((res) => {
-      changeLevel(res.panda_status.level);
+      checkLevel(res.panda_status.level);
       setLevel(res.panda_status.level);
       setGivenfood(res.panda_status.given_food);
       setSasa(res.panda_status.items.normal_food);
