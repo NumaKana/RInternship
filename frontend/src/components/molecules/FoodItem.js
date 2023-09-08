@@ -59,6 +59,15 @@ export const FoodItem = (props) => {
         (1000 * 60 * 60 * 24)
     ) + 1;
 
+  let daysLeftColor = "";
+  if (daysLeft <= 3) {
+    daysLeftColor = "#aa0000";
+  } else if (daysLeft <= 7) {
+    daysLeftColor = "#ff9900";
+  } else {
+    daysLeftColor = "#00aa00";
+  }
+
   return (
     <div
       className="p-3 rounded-xl select-none bg-white cursor-pointer"
@@ -69,7 +78,7 @@ export const FoodItem = (props) => {
         <p>{food.food_name}</p>
         <p>
           あと
-          <span className="font-bold" style={{ color: "#aa0000" }}>
+          <span className="font-bold" style={{ color: daysLeftColor }}>
             <span className="text-xl">{daysLeft}</span>日
           </span>
         </p>
