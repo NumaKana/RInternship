@@ -56,7 +56,7 @@ function Home() {
   const [open, setOpen] = useState(false);
 
   const changeLevel = (l) => {
-    if (l === level) {
+    if (l !== level) {
       setOpen(true);
     }
     setLevel(l);
