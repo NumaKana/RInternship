@@ -126,7 +126,7 @@ function Home() {
           backgroundRepeat: "no-repeat",
         }}
       >
-        <HomeHeader level={level} given_food={given_food} />
+        <HomeHeader level={level} given_food={given_food} exp={exp}/>
         <img
           className="fixed z-10 top-1/2 left-1/2"
           src={panda_amechan}
