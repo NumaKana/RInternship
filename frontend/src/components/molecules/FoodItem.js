@@ -18,6 +18,9 @@ export const FoodItem = (props) => {
   };
 
   const handleDeleteButtonClick = () => {
+    if (!window.confirm("食品を削除しますか？")) {
+      return;
+    }
     const foodApi = new FoodApi();
     foodApi
       .deleteFood(food.food_id)
@@ -33,7 +36,7 @@ export const FoodItem = (props) => {
 
   const handleEditButtonClick = () => {
     openEdit(true, food);
-  }
+  };
 
   const handleConsumeButtonClick = () => {
     const foodApi = new FoodApi();
@@ -53,7 +56,7 @@ export const FoodItem = (props) => {
   const daysLeft =
     Math.floor(
       (new Date(food.expiration_date).getTime() - new Date().getTime()) /
-      (1000 * 60 * 60 * 24)
+        (1000 * 60 * 60 * 24)
     ) + 1;
 
   return (
@@ -128,9 +131,7 @@ export const FoodItem = (props) => {
               </CustomIconButton>
             </span>
             <span>
-              <CustomIconButton
-                onClick={handleEditButtonClick}
-              >
+              <CustomIconButton onClick={handleEditButtonClick}>
                 <EditIcon />
               </CustomIconButton>
             </span>
