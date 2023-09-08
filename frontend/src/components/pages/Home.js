@@ -4,9 +4,11 @@ import { HomeHeader } from "../organisms/HomeHeader.js";
 import Slider from "react-slick";
 import PandaApi from "../../api/PandaApi";
 import { useEffect, useState } from "react";
+import Popup from "../organisms/Popup";
 
 import haikei from "../../img/background.png";
 import panda_amechan from "../../img/panda_amechan.gif";
+import panda_good from "../../img/panda_good.gif";
 import sasa from "../../img/sasa.png";
 import sasa_golden from "../../img/sasa_golden.png";
 import next_arrow from "../../img/icon/next.png";
@@ -65,6 +67,14 @@ function Home() {
   const [sasa_count, setSasa] = useState("0");
   const [premium_count, setPremium] = useState("0");
   const [exp, setExp] = useState("0");
+  const [open, setOpen] = useState(false);
+
+  const changeLevel = (l) => {
+    if (l === level) {
+      setOpen(true);
+    }
+    setLevel(l);
+  };
 
   function feed_sasa() {
     const item = {
@@ -83,7 +93,7 @@ function Home() {
     panda
       .getPanda()
       .then((res) => {
-        setLevel(res.panda_status.level);
+        changeLevel(res.panda_status.level);
         setGivenfood(res.panda_status.given_food);
         setSasa(res.panda_status.items.normal_food);
         setPremium(res.panda_status.items.premium_food);
@@ -111,6 +121,7 @@ function Home() {
     });
 
     panda.getPanda().then((res) => {
+      changeLevel(res.panda_status.level);
       setLevel(res.panda_status.level);
       setGivenfood(res.panda_status.given_food);
       setSasa(res.panda_status.items.normal_food);
@@ -126,11 +137,19 @@ function Home() {
       setGivenfood(res.panda_status.given_food);
       setSasa(res.panda_status.items.normal_food);
       setPremium(res.panda_status.items.premium_food);
+      setExp(res.panda_status.exp);
     });
   }, []);
 
   return (
     <div className="home">
+      <Popup
+        changeOpen={setOpen}
+        open={open}
+        message1={"Level UP!!!"}
+        message2={"はらぺこパンダが成長しました！"}
+        img={panda_good}
+      ></Popup>
       <div
         className="h-screen w-screen relative"
         style={{
