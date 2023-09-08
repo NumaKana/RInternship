@@ -87,7 +87,7 @@ function Home() {
     };
     const panda = new PandaApi();
     panda.feed(item).catch((err) => {
-      alert(err);
+      console.log(err);
     });
 
     panda
@@ -117,7 +117,7 @@ function Home() {
     };
     const panda = new PandaApi();
     panda.feed(item).catch((err) => {
-      alert(err);
+      console.log(err);
     });
 
     panda.getPanda().then((res) => {
