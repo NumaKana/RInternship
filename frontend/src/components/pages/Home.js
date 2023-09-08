@@ -17,13 +17,7 @@ function NextArrow(props) {
   return (
     <div
       className="absolute slick-slider top-0 right-10 slick-initialized"
-      style={{
-        ...style,
-        display: "block",
-        backgroundImage: `url(${next_arrow})`,
-        width: "48px",
-        height: "48px",
-      }}
+      style={{ ...style, zIndex:10, display: "block", backgroundImage:`url(${next_arrow})`, width:"48px", height: "48px"}}
       onClick={onClick}
     />
   );
@@ -34,12 +28,7 @@ function PrevArrow(props) {
   return (
     <div
       className="absolute slick-slider left-10 slick-initialized"
-      style={{
-        display: "block",
-        backgroundImage: `url(${prev_arrow})`,
-        width: "48px",
-        height: "48px",
-      }}
+      style={{ ...style, zIndex: 10,  display: "block", backgroundImage:`url(${prev_arrow})`, width:"48px", height: "48px"}}
       onClick={onClick}
     />
   );
@@ -62,25 +51,32 @@ function Home() {
   const [sasa_count, setSasa] = useState("0");
   const [premium_count, setPremium] = useState("0");
 
-  function feed_sasa() {
-    console.log("笹をあげました");
+  function feed_sasa(){
     const item = {
       panda_feed: {
         items: {
           normal_food: 1,
-          premium_food: 0,
-        },
-      },
-    };
-    const panda = new PandaApi();
-    panda.feed(item).catch((err) => {
-      alert(err);
-    });
-
-    panda.getPanda().then((res) => {
-      setLevel(res.panda_status.level);
-      setGivenfood(res.panda_status.given_food);
-    });
+          premium_food: 0
+        }
+      }
+    }
+    const panda = new PandaApi;
+    panda.feed(item)
+      .catch((err) =>{
+        alert(err)
+      })
+    
+    panda.getPanda()
+      .then((res) => {
+        setLevel(res.panda_status.level);
+        setGivenfood(res.panda_status.given_food);
+        setSasa(res.panda_status.items.normal_food);
+        setPremium(res.panda_status.items.premium_food);
+        setExp(res.panda_status.exp);
+      }).catch((err) => {
+        console.log(err)
+      })
+      console.log("笹をあげました");
   }
 
   function feed_premiumsasa() {
@@ -98,12 +94,14 @@ function Home() {
       alert(err);
     });
 
-    panda.getPanda().then((res) => {
-      setLevel(res.level);
-      setGivenfood(res.panda_status.given_food);
-      setSasa(res.panda_status.items.normal_food);
-      setPremium(res.panda_status.items.premium_food);
-    });
+    panda.getPanda()
+      .then((res) => {
+        setLevel(res.panda_status.level);
+        setGivenfood(res.panda_status.given_food);
+        setSasa(res.panda_status.items.normal_food);
+        setPremium(res.panda_status.items.premium_food);
+        setExp(res.panda_status.exp);
+      })
   }
 
   useEffect(() => {
