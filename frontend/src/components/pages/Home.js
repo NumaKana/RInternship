@@ -17,7 +17,7 @@ function NextArrow(props) {
   return (
     <div
       className="absolute slick-slider top-0 right-10 slick-initialized"
-      style={{ ...style, display: "block", backgroundImage:`url(${next_arrow})`, width:"48px", height: "48px"}}
+      style={{ ...style, zIndex:10, display: "block", backgroundImage:`url(${next_arrow})`, width:"48px", height: "48px"}}
       onClick={onClick}
     />
   );
@@ -53,7 +53,6 @@ function Home() {
   const [premium_count, setPremium] = useState(0)
 
   function feed_sasa(){
-    console.log("笹をあげました");
     const item = {
       panda_feed: {
         items: {
@@ -75,7 +74,10 @@ function Home() {
         setSasa(res.panda_status.items.normal_food);
         setPremium(res.panda_status.items.premium_food);
         setExp(res.panda_status.exp);
+      }).catch((err) => {
+        console.log(err)
       })
+      console.log("笹をあげました");
   }
 
   function feed_premiumsasa(){
